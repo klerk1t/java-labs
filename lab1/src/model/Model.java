@@ -1,18 +1,18 @@
 package model;
 
-import java.util.List;
+import model.db.DBExample;
+import model.entity.Teacher;
 
 public class Model {
 
-    private DBExample dbExample;
-    private List<Faculty> facultyList;
+    private Teacher[] teachers;
 
     public Model() {
-        dbExample = new DBExample();
-        facultyList = dbExample.createFacultyList();
+        DBExample dbExample = new DBExample();
+        teachers = dbExample.getTeachers();
     }
 
-    public List<Faculty> getFacultyList() {
-        return facultyList;
+    public Teacher[] getTeachers() {
+        return teachers;
     }
 }
