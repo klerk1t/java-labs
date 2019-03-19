@@ -12,20 +12,6 @@ public class View {
         System.out.println(message);
     }
 
-    public void printWrongInput(String message) {
-        StringBuilder sb = new StringBuilder(ViewConstans.WRONG_INPUT)
-                .append("\n")
-                .append(message);
-        System.out.println(sb);
-    }
-
-    public void printTeachers(Teacher[] teachers) {
-        if(teachers.length == 0) {
-            printMessage(ViewConstans.EMPTY_LIST);
-        } else
-        printMessage(Arrays.toString(teachers));
-    }
-
     public void printSubject() {
         printMessage(Arrays.toString(Subjects.values()));
     }
@@ -44,8 +30,8 @@ public class View {
         }
 
         for(int i = 0; i < table[0].length; i++) {
-            for(int j = 0; j < table.length; j++) {
-                System.out.printf("%-40s", table[j][i]);
+            for (String[] strings : table) {
+                System.out.printf("%-40s", strings[i]);
             }
             System.out.println("\n");
         }

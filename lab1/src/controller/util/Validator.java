@@ -1,5 +1,6 @@
 package controller.util;
 
+import controller.operations.Operation;
 import model.enums.Department;
 import model.enums.Subjects;
 import view.View;
@@ -18,8 +19,7 @@ public class Validator {
         this.view = view;
     }
 
-    public ValidInput checkOfValidValue() {
-        ValidInput validInput = null;
+    public Operation checkOfValidValue() {
         String string;
         while (!(scanner.hasNext() && Arrays.stream(ValidInput.values())
                 .map(ValidInput::getName)
@@ -28,13 +28,13 @@ public class Validator {
             view.printMessage(ViewConstans.WRONG_INPUT);
         }
 
-        for (ValidInput v : ValidInput.values()) {
-            if (string.equals(v.getName())) {
-                validInput = v;
-                break;
-            }
-        }
-        return validInput;
+        String temp = string;
+
+        return Arrays.stream(ValidInput.values())
+                .filter(e -> e.getName().equals(temp))
+                .findFirst()
+                .get()
+                .setOperation();
     }
 
     public String inputSubject() {
@@ -59,8 +59,8 @@ public class Validator {
                 .map(Department::getName)
                 .anyMatch((department = scanner.next())::equals))
         ) {
-            view.printMessage(ViewConstans.INPUT_SUBJECT);
-            view.printSubject();
+            view.printMessage(ViewConstans.INPUT_DEPARTMENT);
+            view.printDepartments();
         }
         return department;
     }

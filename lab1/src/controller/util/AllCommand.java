@@ -7,18 +7,16 @@ import view.View;
 
 public class AllCommand {
 
-    private Model model;
     private View view;
     private Validator validator;
     private SearchTeachersByParameters searchTeachersByParameters;
     private Teacher[] teachers;
 
     public AllCommand(Model model, Validator validator, View view) {
-        this.model = model;
         this.validator = validator;
         this.view = view;
         searchTeachersByParameters = new SearchTeachersByParameters();
-        teachers = this.model.getTeachers();
+        teachers = model.getTeachers();
     }
 
     public boolean showAll() {

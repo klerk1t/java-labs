@@ -2,6 +2,7 @@ package model;
 
 import model.entity.Teacher;
 import model.enums.Gender;
+import model.enums.Position;
 import model.enums.Subjects;
 import java.util.Arrays;
 
@@ -26,6 +27,7 @@ public class SearchTeachersByParameters {
     public Teacher[] getFemaleDocent(Teacher[] teachers) {
         return Arrays.stream(teachers)
                 .filter(e -> e.getGender().equals(Gender.FEMALE))
+                .filter(e -> e.getPosition().equals(Position.DOCENT))
                 .toArray(Teacher[]::new);
     }
 
