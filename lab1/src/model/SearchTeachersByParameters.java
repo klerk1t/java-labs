@@ -10,14 +10,14 @@ public class SearchTeachersByParameters {
 
     public Teacher[] getTeachersByDepartments(Teacher[] teachers, String department) {
         return Arrays.stream(teachers)
-                .filter(e -> e.getDepartment().getName().equals(department))
+                .filter(e -> e.getDepartment().toString().equals(department))
                 .toArray(Teacher[]::new);
     }
 
     public Teacher[] getTeachersBySubject(Teacher[] teachers, String selectedSubject) {
         return Arrays.stream(teachers)
                 .filter(e -> Arrays.stream(e.getSubjects())
-                        .map(Subjects::getName)
+                        .map(Subjects::toString)
                         .anyMatch(selectedSubject::equals)
                 )
                 .toArray(Teacher[]::new);

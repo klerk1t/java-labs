@@ -2,7 +2,8 @@ package controller.util;
 
 import model.Model;
 import model.SearchTeachersByParameters;
-import model.entity.Teacher;
+import model.enums.Department;
+import model.enums.Subjects;
 import view.View;
 
 public class AllCommand {
@@ -10,39 +11,39 @@ public class AllCommand {
     private View view;
     private Validator validator;
     private SearchTeachersByParameters searchTeachersByParameters;
-    private Teacher[] teachers;
+    private Model model;
 
     public AllCommand(Model model, Validator validator, View view) {
+        this.model = model;
         this.validator = validator;
         this.view = view;
         searchTeachersByParameters = new SearchTeachersByParameters();
-        teachers = model.getTeachers();
     }
 
-    public boolean showAll() {
-        view.tablePrint(teachers);
+    boolean showAll() {
+        view.tablePrint(model.getTeachers());
         return true;
     }
 
-    public boolean showByDepartment() {
+    boolean showByDepartment() {
         view.tablePrint(searchTeachersByParameters
-                .getTeachersByDepartments(teachers, validator.inputDepartment()));
+                .getTeachersByDepartments(model.getTeachers(), validator.input(Department.values())));
         return true;
     }
 
-    public boolean showBySubject() {
+    boolean showBySubject() {
         view.tablePrint(searchTeachersByParameters
-                .getTeachersBySubject(teachers, validator.inputSubject()));
+                .getTeachersBySubject(model.getTeachers(), validator.input(Subjects.values())));
         return true;
     }
 
-    public boolean showFemaleDocent() {
+    boolean showFemaleDocent() {
         view.tablePrint(searchTeachersByParameters
-                .getFemaleDocent(teachers));
+                .getFemaleDocent(model.getTeachers()));
         return true;
     }
 
-    public boolean exit() {
+    boolean exit() {
         return false;
     }
 }

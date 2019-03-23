@@ -8,7 +8,7 @@ public class Model {
     private Teacher[] teachers;
 
     public Model() {
-        DBExample dbExample = new DBExample();
+        DBExample dbExample = new DBExample(20);
         teachers = dbExample.getTeachers();
     }
 

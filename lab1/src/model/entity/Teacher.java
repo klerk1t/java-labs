@@ -88,17 +88,17 @@ public class Teacher {
                 .append(name).append("\n")
                 .append("Surname: ").append(surname).append("\n")
                 .append("Patronymic: ").append(patronymic).append("\n")
-                .append("Gender: ").append(gender.getName()).append("\n")
-                .append("Department: ").append(department.getName()).append("\n")
+                .append("Gender: ").append(gender.toString()).append("\n")
+                .append("Department: ").append(department.toString()).append("\n")
                 .append("Subjects: ").append(arrayOfSubjectsToString()).append("\n")
-                .append("Position: ").append(position.getName()).append("\n");
+                .append("Position: ").append(position.toString()).append("\n");
         return new String(sb);
     }
 
     private String arrayOfSubjectsToString() {
         StringBuilder sb = new StringBuilder();
         for(Subjects subjects : subjects) {
-            sb.append(subjects.getName())
+            sb.append(subjects.toString())
                     .append(" ");
         }
         return new String(sb).trim();

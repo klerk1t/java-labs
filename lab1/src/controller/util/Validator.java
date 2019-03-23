@@ -3,8 +3,9 @@ package controller.util;
 import controller.operations.Operation;
 import model.enums.Department;
 import model.enums.Subjects;
+import view.Util;
 import view.View;
-import view.ViewConstans;
+import view.ViewConstants;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -19,13 +20,13 @@ public class Validator {
         this.view = view;
     }
 
-    public Operation checkOfValidValue() {
+    public Operation checkOfValidValue() throws WrongInputDataException {
         String string;
-        while (!(scanner.hasNext() && Arrays.stream(ValidInput.values())
+        while (!(scanner.hasNextLine() && Arrays.stream(ValidInput.values())
                 .map(ValidInput::getName)
-                .anyMatch((string = scanner.next())::equals))
+                .anyMatch((string = scanner.nextLine())::equals))
         ) {
-            view.printMessage(ViewConstans.WRONG_INPUT);
+            throw new WrongInputDataException(ViewConstants.WRONG_INPUT);
         }
 
         String temp = string;
@@ -34,34 +35,44 @@ public class Validator {
                 .filter(e -> e.getName().equals(temp))
                 .findFirst()
                 .get()
-                .setOperation();
+                .getOperation();
     }
 
-    public String inputSubject() {
-        view.printMessage(ViewConstans.INPUT_SUBJECT);
-        view.printSubject();
-        String subject;
-        while (!(scanner.hasNext() && Arrays.stream(Subjects.values())
-                .map(Subjects::getName)
-                .anyMatch((subject = scanner.next())::equals))
-        ) {
-            view.printMessage(ViewConstans.INPUT_SUBJECT);
-            view.printSubject();
+    private String verifyInput(Enum<?>[] enums) throws WrongInputDataException {
+        String input = "";
+        Util util = () -> {};
+        if(enums instanceof Department[]) {
+            input = ViewConstants.INPUT_DEPARTMENT;
+            util = () -> view.printDepartments();
         }
-        return subject;
+        if(enums instanceof Subjects[]) {
+            input = ViewConstants.INPUT_SUBJECT;
+            util = () -> view.printSubject();
+        }
+        String str;
+
+        view.printMessage(input);
+        util.print();
+
+        while (!(scanner.hasNextLine() && Arrays.stream(enums)
+                .map(Enum::toString)
+                .anyMatch((str = scanner.nextLine())::equals))
+        ) {
+            throw new WrongInputDataException(ViewConstants.WRONG_INPUT);
+        }
+        return str;
     }
 
-    public String inputDepartment() {
-        view.printMessage(ViewConstans.INPUT_DEPARTMENT);
-        view.printDepartments();
-        String department;
-        while (!(scanner.hasNext() && Arrays.stream(Department.values())
-                .map(Department::getName)
-                .anyMatch((department = scanner.next())::equals))
-        ) {
-            view.printMessage(ViewConstans.INPUT_DEPARTMENT);
-            view.printDepartments();
+    String input(Enum<?>[] enums) {
+        String string;
+        while(true) {
+            try {
+                string = verifyInput(enums);
+                break;
+            } catch (WrongInputDataException e) {
+                e.printStackTrace();
+            }
         }
-        return department;
+        return string;
     }
 }

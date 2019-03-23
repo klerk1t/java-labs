@@ -3,9 +3,10 @@ package controller;
 import controller.util.AllCommand;
 import controller.util.ValidInput;
 import controller.util.Validator;
+import controller.util.WrongInputDataException;
 import model.Model;
 import view.View;
-import view.ViewConstans;
+import view.ViewConstants;
 
 import java.util.Scanner;
 
@@ -25,9 +26,19 @@ public class Controller {
     }
 
     public void execute() {
-        do {
-            view.printMessage(ViewConstans.START_MESSAGE);
-        } while(validator.checkOfValidValue().doOperation());
+        boolean key = true;
+        while(key) {
+            view.printMessage(ViewConstants.START_MESSAGE);
+            while (true) {
+                try {
+                    key = validator.checkOfValidValue().doOperation();
+                    break;
+                } catch (WrongInputDataException e) {
+                    e.printStackTrace();
+                    view.printMessage(ViewConstants.START_MESSAGE);
+                }
+            }
+        }
     }
 
 }

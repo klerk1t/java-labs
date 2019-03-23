@@ -6,28 +6,28 @@ public enum ValidInput {
 
     SHOW_ALL("1") {
         @Override
-        public Operation setOperation() {
+        public Operation getOperation() {
             return allCommand::showAll;
         }
     }, SHOW_BY_DEPARTMENT("2") {
         @Override
-        public Operation setOperation() {
+        public Operation getOperation() {
             return allCommand::showByDepartment;
         }
     }, SHOW_BY_SUBJECT("3") {
         @Override
-        public Operation setOperation() {
+        public Operation getOperation() {
             return allCommand::showBySubject;
         }
     },
     SHOW_BY_FEMALE_DOCENT("4") {
         @Override
-        public Operation setOperation() {
+        public Operation getOperation() {
             return allCommand::showFemaleDocent;
         }
     }, EXIT("-q") {
         @Override
-        public Operation setOperation() {
+        public Operation getOperation() {
             return allCommand::exit;
         }
     };
@@ -47,7 +47,7 @@ public enum ValidInput {
         return name;
     }
 
-    public abstract Operation setOperation();
+    public abstract Operation getOperation();
 
 
 }
