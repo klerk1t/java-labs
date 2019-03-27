@@ -22,17 +22,15 @@ public class Validator {
 
     public Operation checkOfValidValue() throws WrongInputDataException {
         String string;
-        while (!(scanner.hasNextLine() && Arrays.stream(ValidInput.values())
+        if (!(scanner.hasNextLine() && Arrays.stream(ValidInput.values())
                 .map(ValidInput::getName)
                 .anyMatch((string = scanner.nextLine())::equals))
         ) {
             throw new WrongInputDataException(ViewConstants.WRONG_INPUT);
         }
 
-        String temp = string;
-
         return Arrays.stream(ValidInput.values())
-                .filter(e -> e.getName().equals(temp))
+                .filter(e -> e.getName().equals(string))
                 .findFirst()
                 .get()
                 .getOperation();
@@ -54,7 +52,7 @@ public class Validator {
         view.printMessage(input);
         util.print();
 
-        while (!(scanner.hasNextLine() && Arrays.stream(enums)
+        if (!(scanner.hasNextLine() && Arrays.stream(enums)
                 .map(Enum::toString)
                 .anyMatch((str = scanner.nextLine())::equals))
         ) {
