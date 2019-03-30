@@ -5,7 +5,9 @@ import model.enums.Gender;
 import model.enums.Position;
 import model.enums.Subjects;
 
-public class Teacher {
+import java.io.Serializable;
+
+public class Teacher implements Serializable {
 
     private String name;
     private String surname;

@@ -1,6 +1,12 @@
 package view;
 
 public interface ViewConstants {
+
+    String READ_FROM_FILE = "Do you want read data from file y/n ?";
+    String WRITE_TO_FILE = "Do you want write find data to file y/n ?";
+    String FILE_FORMATE = "Input 1 for write in string format.\n" +
+            "Input 2 for serialization";
+
     String START_MESSAGE = "Input 1 for the see all teachers list.\n" +
             "Input 2 for the see teachers list by department\n" +
             "Input 3 for the see teachers list by related subject\n" +
@@ -12,6 +18,7 @@ public interface ViewConstants {
     String INPUT_SUBJECT = "Input subject";
 
     String EMPTY_LIST = "List is empty";
+
 
 
 

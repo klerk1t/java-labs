@@ -10,6 +10,8 @@ import view.ViewConstants;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import static java.util.Arrays.stream;
+
 public class Validator {
 
     private Scanner scanner;
@@ -21,22 +23,31 @@ public class Validator {
     }
 
     public Operation checkOfValidValue() throws WrongInputDataException {
-        String string;
-        if (!(scanner.hasNextLine() && Arrays.stream(ValidInput.values())
-                .map(ValidInput::getName)
-                .anyMatch((string = scanner.nextLine())::equals))
-        ) {
-            throw new WrongInputDataException(ViewConstants.WRONG_INPUT);
-        }
+        String str = verifyInput(ValidInput.values());
+
+        checkException(str);
 
         return Arrays.stream(ValidInput.values())
-                .filter(e -> e.getName().equals(string))
+                .filter(e -> e.toString().equals(str))
                 .findFirst()
                 .get()
                 .getOperation();
     }
 
-    private String verifyInput(Enum<?>[] enums) throws WrongInputDataException {
+    String verificationOfAdditionalParameters(Enum<?>[] enums) {
+        String string;
+        while(true) {
+            try {
+                string = input(enums);
+                break;
+            } catch (WrongInputDataException e) {
+                e.printStackTrace();
+            }
+        }
+        return string;
+    }
+
+    private String input(Enum<?>[] enums) throws WrongInputDataException {
         String input = "";
         Util util = () -> {};
         if(enums instanceof Department[]) {
@@ -47,30 +58,29 @@ public class Validator {
             input = ViewConstants.INPUT_SUBJECT;
             util = () -> view.printSubject();
         }
-        String str;
 
         view.printMessage(input);
         util.print();
 
-        if (!(scanner.hasNextLine() && Arrays.stream(enums)
-                .map(Enum::toString)
-                .anyMatch((str = scanner.nextLine())::equals))
-        ) {
-            throw new WrongInputDataException(ViewConstants.WRONG_INPUT);
-        }
+        String str = verifyInput(enums);
+
+        checkException(str);
+
         return str;
     }
 
-    String input(Enum<?>[] enums) {
-        String string;
-        while(true) {
-            try {
-                string = verifyInput(enums);
-                break;
-            } catch (WrongInputDataException e) {
-                e.printStackTrace();
-            }
+    private void checkException(String str) throws WrongInputDataException {
+        if(!("".equals(str))) {
+            return;
         }
-        return string;
+        throw new WrongInputDataException(ViewConstants.WRONG_INPUT);
+    }
+
+    private String verifyInput(Enum<?>[] enums) {
+        return stream(enums)
+                .map(Enum::toString)
+                .filter(scanner.nextLine().toLowerCase()::equals)
+                .findFirst()
+                .orElse("");
     }
 }

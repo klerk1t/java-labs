@@ -27,13 +27,15 @@ public class AllCommand {
 
     boolean showByDepartment() {
         view.tablePrint(searchTeachersByParameters
-                .getTeachersByDepartments(model.getTeachers(), validator.input(Department.values())));
+                .getTeachersByDepartments(model.getTeachers(),
+                        validator.verificationOfAdditionalParameters(Department.values())));
         return true;
     }
 
     boolean showBySubject() {
         view.tablePrint(searchTeachersByParameters
-                .getTeachersBySubject(model.getTeachers(), validator.input(Subjects.values())));
+                .getTeachersBySubject(model.getTeachers(),
+                        validator.verificationOfAdditionalParameters(Subjects.values())));
         return true;
     }
 
