@@ -17,7 +17,7 @@ public class SearchStudentByAverageMarks {
 
     public List<Student> search() {
         return map.entrySet().stream()
-                .filter(e -> e.getValue() >= 4.0)
+                .filter(e -> e.getValue() < 4.0)
                 .map(Map.Entry::getKey)
                 .collect(toList());
     }
