@@ -1,10 +1,8 @@
 package controller;
 
-import controller.util.AllCommand;
-import controller.util.ValidInput;
-import controller.util.Validator;
-import controller.util.WrongInputDataException;
+import controller.util.*;
 import model.Model;
+import model.filework.WriteStringData;
 import view.View;
 import view.ViewConstants;
 
@@ -14,24 +12,44 @@ public class Controller {
 
     private View view;
     private Scanner scanner;
-    private Validator validator;
+    private InputCommandsValidator inputCommandsValidator;
     private AllCommand allCommand;
+    private VerifyInput verifyInput;
+    private FileCommand fileCommand;
+    private FileValidator fileValidator;
+    private WriteStringData writeStringData;
 
     public Controller(Model model, View view) {
         this.view = view;
         scanner = new Scanner(System.in);
-        validator = new Validator(scanner, view);
-        allCommand = new AllCommand(model, validator, view);
-        ValidInput.setAllCommand(allCommand);
+        verifyInput = new VerifyInput(scanner);
+        inputCommandsValidator = new InputCommandsValidator(view, verifyInput);
+        fileValidator = new FileValidator(verifyInput);
+        writeStringData = new WriteStringData();
+        fileCommand = new FileCommand(model, writeStringData);
+        allCommand = new AllCommand(model, inputCommandsValidator, view, fileCommand, fileValidator);
+        ValidInputCommands.setAllCommand(allCommand);
+        ReadFromFile.setFileCommand(fileCommand);
+
     }
 
     public void execute() {
         boolean key = true;
+        view.printMessage(ViewConstants.READ_FROM_FILE);
+        while(true) {
+            try {
+                fileValidator.checkOfCorrectInputFileRead(ReadFromFile.values()).doOperation();
+                break;
+            } catch (WrongInputDataException e) {
+                e.printStackTrace();
+                view.printMessage(ViewConstants.READ_FROM_FILE);
+            }
+        }
         while(key) {
             view.printMessage(ViewConstants.START_MESSAGE);
             while (true) {
                 try {
-                    key = validator.checkOfValidValue().doOperation();
+                    key = inputCommandsValidator.checkOfValidValue().doOperation();
                     break;
                 } catch (WrongInputDataException e) {
                     e.printStackTrace();

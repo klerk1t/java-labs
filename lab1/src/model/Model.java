@@ -2,39 +2,29 @@ package model;
 
 import model.db.DBExample;
 import model.entity.Teacher;
-import model.filework.SerializationData;
+import model.filework.ReadSerializationData;
 
 public class Model {
 
     private Teacher[] teachers;
-    private SerializationData serializationData;
+    private ReadSerializationData readSerializationData;
+    private DBExample dbExample;
 
     public Model() {
-        DBExample dbExample = new DBExample(20);
-        teachers = dbExample.getTeachers();
-        serializationData = new SerializationData();
-    }
-
-
-
-    public void loadFromDB() {
-        loadFromDB(10);
-    }
-
-    public void loadFromDB(int i) {
-        DBExample dbExample = new DBExample(i);
-        teachers = dbExample.getTeachers();
-    }
-
-    public void loadFromFile() {
-        teachers = serializationData.getTeachersR();
+        dbExample = new DBExample(20);
+        readSerializationData = new ReadSerializationData();
     }
 
     public Teacher[] getTeachers() {
         return teachers;
     }
 
-    public void setTeachers(Teacher[] teachers) {
-        this.teachers = teachers;
+    public void loadTeachersfromFile() {
+        readSerializationData.readData();
+        teachers =  readSerializationData.getTeachersRead();
+    }
+
+    public void loadTeachersFromDB() {
+        teachers = dbExample.getTeachers();
     }
 }

@@ -4,14 +4,14 @@ import model.entity.Teacher;
 
 import java.io.*;
 
-public class SerializationData {
+public class ReadSerializationData {
 
-    private Teacher[] teachersW;
-    private Teacher[] teachersR;
+    private Teacher[] teachersWrite;
+    private Teacher[] teachersRead;
 
     public void writeData() {
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("res/teachers"))) {
-            oos.writeObject(teachersW);
+            oos.writeObject(teachersWrite);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -19,17 +19,17 @@ public class SerializationData {
 
     public void readData() {
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("res/teachers"))) {
-            teachersR = (Teacher[]) ois.readObject();
+            teachersRead = (Teacher[]) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public Teacher[] getTeachersR() {
-        return teachersR;
+    public Teacher[] getTeachersRead() {
+        return teachersRead;
     }
 
-    public void setTeachersW(Teacher[] teachersW) {
-        this.teachersW = teachersW;
+    public void setTeachersWrite(Teacher[] teachersWrite) {
+        this.teachersWrite = teachersWrite;
     }
 }

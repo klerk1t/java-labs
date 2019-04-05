@@ -2,7 +2,7 @@ package controller.util;
 
 import controller.operations.Operation;
 
-public enum ValidInput {
+public enum ValidInputCommands {
 
     SHOW_ALL("1") {
         @Override
@@ -35,7 +35,7 @@ public enum ValidInput {
     private static AllCommand allCommand;
     private String name;
 
-    ValidInput(String name) {
+    ValidInputCommands(String name) {
         this.name = name;
     }
 

@@ -10,24 +10,22 @@ import view.ViewConstants;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import static java.util.Arrays.stream;
+public class InputCommandsValidator {
 
-public class Validator {
-
-    private Scanner scanner;
     private View view;
+    private VerifyInput verifyInput;
 
-    public Validator(Scanner scanner, View view) {
-        this.scanner = scanner;
+    public InputCommandsValidator(View view, VerifyInput verifyInput) {
         this.view = view;
+        this.verifyInput = verifyInput;
     }
 
     public Operation checkOfValidValue() throws WrongInputDataException {
-        String str = verifyInput(ValidInput.values());
+        String str = verifyInput.verifyInput(ValidInputCommands.values());
 
-        checkException(str);
+        verifyInput.checkException(str);
 
-        return Arrays.stream(ValidInput.values())
+        return Arrays.stream(ValidInputCommands.values())
                 .filter(e -> e.toString().equals(str))
                 .findFirst()
                 .get()
@@ -62,25 +60,11 @@ public class Validator {
         view.printMessage(input);
         util.print();
 
-        String str = verifyInput(enums);
+        String str = verifyInput.verifyInput(enums);
 
-        checkException(str);
+        verifyInput.checkException(str);
 
         return str;
     }
 
-    private void checkException(String str) throws WrongInputDataException {
-        if(!("".equals(str))) {
-            return;
-        }
-        throw new WrongInputDataException(ViewConstants.WRONG_INPUT);
-    }
-
-    private String verifyInput(Enum<?>[] enums) {
-        return stream(enums)
-                .map(Enum::toString)
-                .filter(scanner.nextLine().toLowerCase()::equals)
-                .findFirst()
-                .orElse("");
-    }
 }

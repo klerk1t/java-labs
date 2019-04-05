@@ -31,7 +31,7 @@ public class View {
     }
 
     public void tablePrint(Teacher[] teachers) {
-        if(teachers.length == 0) {
+        if(teachers == null||teachers.length == 0) {
             printMessage(ViewConstants.EMPTY_LIST);
         } else {
             String[][] table = new String[teachers.length][];
