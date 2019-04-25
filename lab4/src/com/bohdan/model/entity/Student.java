@@ -35,7 +35,7 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return surname.equals(student.surname);
+        return surname.equalsIgnoreCase(student.surname);
     }
 
     @Override

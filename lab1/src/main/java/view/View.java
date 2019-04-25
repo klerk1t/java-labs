@@ -15,18 +15,18 @@ public class View {
     public void printSubject() {
         printMessage(
                 Arrays.toString(
-                Arrays.stream(Subjects.values())
-                .map(Subjects::toString)
-                .toArray())
+                        Arrays.stream(Subjects.values())
+                                .map(Subjects::toString)
+                                .toArray())
         );
     }
 
     public void printDepartments() {
         printMessage(
                 Arrays.toString(
-                Arrays.stream(Department.values())
-                .map(Department::toString)
-                .toArray())
+                        Arrays.stream(Department.values())
+                                .map(Department::toString)
+                                .toArray())
         );
     }
 

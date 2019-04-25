@@ -1,5 +1,7 @@
 package controller.util;
 
+import controller.enums.ValidInputCommands;
+import controller.exceptions.WrongInputDataException;
 import controller.operations.Operation;
 import model.enums.Department;
 import model.enums.Subjects;
@@ -8,7 +10,6 @@ import view.View;
 import view.ViewConstants;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class InputCommandsValidator {
 
@@ -32,14 +33,14 @@ public class InputCommandsValidator {
                 .getOperation();
     }
 
-    String verificationOfAdditionalParameters(Enum<?>[] enums) {
+    public String verificationOfAdditionalParameters(Enum<?>[] enums) {
         String string;
         while(true) {
             try {
                 string = input(enums);
                 break;
             } catch (WrongInputDataException e) {
-                e.printStackTrace();
+                view.printMessage(ViewConstants.WRONG_INPUT);
             }
         }
         return string;

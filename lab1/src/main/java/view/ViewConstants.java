@@ -17,7 +17,4 @@ public interface ViewConstants {
 
     String EMPTY_LIST = "List is empty";
 
-
-
-
 }

@@ -10,7 +10,7 @@ public class ReadSerializationData {
     private Teacher[] teachersRead;
 
     public void writeData() {
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("res/teachers"))) {
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("files/teachers"))) {
             oos.writeObject(teachersWrite);
         } catch (IOException e) {
             e.printStackTrace();
@@ -18,7 +18,7 @@ public class ReadSerializationData {
     }
 
     public void readData() {
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("res/teachers"))) {
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("files/teachers"))) {
             teachersRead = (Teacher[]) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

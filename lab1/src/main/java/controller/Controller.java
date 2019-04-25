@@ -1,5 +1,10 @@
 package controller;
 
+import controller.commands.AllCommand;
+import controller.commands.FileCommand;
+import controller.enums.ReadFromFile;
+import controller.enums.ValidInputCommands;
+import controller.exceptions.WrongInputDataException;
 import controller.util.*;
 import model.Model;
 import model.filework.WriteStringData;
@@ -41,7 +46,6 @@ public class Controller {
                 fileValidator.checkOfCorrectInputFileRead(ReadFromFile.values()).doOperation();
                 break;
             } catch (WrongInputDataException e) {
-                e.printStackTrace();
                 view.printMessage(ViewConstants.READ_FROM_FILE);
             }
         }
@@ -52,7 +56,6 @@ public class Controller {
                     key = inputCommandsValidator.checkOfValidValue().doOperation();
                     break;
                 } catch (WrongInputDataException e) {
-                    e.printStackTrace();
                     view.printMessage(ViewConstants.START_MESSAGE);
                 }
             }
