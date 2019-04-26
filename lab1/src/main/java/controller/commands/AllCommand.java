@@ -9,12 +9,15 @@ import model.service.SearchTeachersByParameters;
 import model.entity.Teacher;
 import model.enums.Department;
 import model.enums.Subjects;
+import org.apache.log4j.Logger;
 import view.View;
 import view.ViewConstants;
 
 import java.util.Arrays;
 
 public class AllCommand {
+
+    private final static Logger LOGGER = Logger.getLogger(AllCommand.class);
 
     private View view;
     private InputCommandsValidator inputCommandsValidator;
@@ -34,12 +37,14 @@ public class AllCommand {
     }
 
     public boolean showAll() {
+        LOGGER.info("Selected show all");
         Teacher[] teachers = model.getTeachers();
         checkIfWriteToFile(teachers);
         return true;
     }
 
     public boolean showByDepartment() {
+        LOGGER.info("Selected show by department");
         Teacher[] teachers = searchTeachersByParameters
                 .getTeachersByDepartments(model.getTeachers(),
                         inputCommandsValidator.verificationOfAdditionalParameters(Department.values()));
@@ -48,6 +53,7 @@ public class AllCommand {
     }
 
     public boolean showBySubject() {
+        LOGGER.info("Selected show by students");
         Teacher[] teachers = searchTeachersByParameters
                 .getTeachersBySubject(model.getTeachers(),
                         inputCommandsValidator.verificationOfAdditionalParameters(Subjects.values()));
@@ -56,6 +62,7 @@ public class AllCommand {
     }
 
     public boolean showFemaleDocent() {
+        LOGGER.info("Selected show female docent");
         Teacher[] teachers = searchTeachersByParameters
                 .getFemaleDocent(model.getTeachers());
         checkIfWriteToFile(teachers);
@@ -63,6 +70,7 @@ public class AllCommand {
     }
 
     public boolean exit() {
+        LOGGER.info("Selected exit");
         return false;
     }
 
@@ -75,6 +83,7 @@ public class AllCommand {
                 fileValidator.checkOfCorrectInputFileWrite(WriteToFile.values()).doOperation();
                 break;
             } catch (WrongInputDataException e) {
+                LOGGER.warn("Incorrect choose y/n write or read data");
                 view.printMessage(ViewConstants.WRITE_TO_FILE);
             }
         }

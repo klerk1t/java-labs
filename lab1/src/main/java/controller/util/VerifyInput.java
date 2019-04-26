@@ -9,6 +9,7 @@ import static java.util.Arrays.stream;
 
 public class VerifyInput {
 
+
     private Scanner scanner;
 
     public VerifyInput(Scanner scanner) {

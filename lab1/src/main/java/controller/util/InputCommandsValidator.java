@@ -5,6 +5,7 @@ import controller.exceptions.WrongInputDataException;
 import controller.operations.Operation;
 import model.enums.Department;
 import model.enums.Subjects;
+import org.apache.log4j.Logger;
 import view.Util;
 import view.View;
 import view.ViewConstants;
@@ -12,6 +13,8 @@ import view.ViewConstants;
 import java.util.Arrays;
 
 public class InputCommandsValidator {
+
+    private final static Logger LOGGER = Logger.getLogger(InputCommandsValidator.class);
 
     private View view;
     private VerifyInput verifyInput;
@@ -40,6 +43,7 @@ public class InputCommandsValidator {
                 string = input(enums);
                 break;
             } catch (WrongInputDataException e) {
+                LOGGER.info("Incorrect input name of department or subject", e);
                 view.printMessage(ViewConstants.WRONG_INPUT);
             }
         }
